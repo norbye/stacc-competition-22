@@ -1,0 +1,46 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserType {
+  username: String!
+}
+
+type PersonType {
+  user: UserType
+  profile_img_url: String!
+  address: String!
+  config: String!
+}
+
+type NftType {
+  id: Int!
+  name: String!
+  description: String
+  image_url: String!
+  owner: PersonType
+  creator: PersonType
+}
+
+type Query {
+  items: [NftType!]!
+  hello: String!
+}
+
+type Mutation {
+  importNft(input: ImportNftInput!): NftType!
+  createNft(input: NftInput!): NftType!
+  updateItem(input: NftInput!, id: String!): NftType!
+  deleteItem(id: String!): NftType!
+}
+
+input ImportNftInput {
+  asset_contract_address: String!
+  token_id: String!
+}
+
+input NftInput {
+  token_id: String!
+  name: String!
+  description: Float!
+}

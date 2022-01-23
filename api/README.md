@@ -1,38 +1,43 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Nestjs GraphQL
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Example demonstrating how to build a GraphQL CRUD application using Nestjs and MongoDB. For an in-depth explanation of the application and the basic Nestjs concepts, you can follow [this article](https://gabrieltanner.org/blog/nestjs-graphqlserver).
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Requirements
 
-## Description
+- [NodeJS](https://nodejs.org/en/)
+- MongoDB database
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Getting started
 
-## Installation
+### Installing dependencies
+
+First, you need to install all the needed dependencies.
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+### Configuring the database
+
+Before starting the application, you will need to create a MongoDB database and edit the connection string in the `app.modules.ts` file to match your database configuration. The repository includes a Docker-Compose file that helps you start MongoDB.
+
+```
+docker-compose up
+```
+
+The default database configuration in the `app.module.ts` file looks like this:
+
+```
+@Module({
+  imports: [MongooseModule.forRoot('mongodb://localhost/nest')],
+})
+```
+
+If you are not running the database on your local machine, replace localhost with the correct IP-Address.
+
+### Starting the application
+
+After installing the dependencies, you can run the application using one of the following commands.
 
 ```bash
 # development
@@ -45,29 +50,58 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Testing the application
 
-```bash
-# unit tests
-$ npm run test
+After starting the application you can start using it by either opening the GraphQL playground on http://localhost:3000/graphql or sending a request through an HTTP client like [Postman](https://www.postman.com/) or [Insomnia](https://insomnia.rest/).
 
-# e2e tests
-$ npm run test:e2e
+### Creating an item
 
-# test coverage
-$ npm run test:cov
+```
+mutation {
+  createItem(input: {title: "item", price: 10, description: "test"}) {
+    title
+    price
+    description
+    id
+  }
+}
 ```
 
-## Support
+### Getting all items
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+{
+  items {
+    title,
+    price,
+    description,
+    id
+  }
+}
+```
 
-## Stay in touch
+### Updating item
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```
+mutation {
+  updateItem(id: "ID", input: {title: "item123", price: 10, description: "test123"}) {
+    title
+    price
+    description
+    id
+  }
+}
+```
 
-## License
+### Deleting item
 
-Nest is [MIT licensed](LICENSE).
+```
+mutation {
+  deleteItem(id: "ID") {
+    title
+    price
+    description
+    id
+  }
+}
+```
