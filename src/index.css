@@ -15,3 +15,11 @@ code {
 main {
   margin: 0 2em;
 }
+
+button {
+  display: block;
+  background-color: #efeee1;
+  border: 1px solid #9f9e91;
+  padding: 3px 6px;
+  border-radius: 2px;
+}
