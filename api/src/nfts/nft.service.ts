@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { NftType, PersonType } from './dto/import-nft.dto';
+import { CollectionType, NftType, PersonType } from './dto/import-nft.dto';
 import { Nft, Person, Trait, Collection } from './interfaces/nft.interface';
 import { ImportNftInput, NftInput } from './input-nft.input';
 
@@ -17,7 +17,7 @@ export class NftService {
 
   async importNft(importNftDto: ImportNftInput): Promise<NftType> {
     // Fetch stuffs
-    let res = await axios({
+    const res = await axios({
       url:
         'https://api.opensea.io/api/v1/asset/' +
         importNftDto.asset_contract_address +
@@ -107,10 +107,11 @@ export class NftService {
       this.collectionModel,
       res.data.collection,
       (err, doc) => {
-        res.data.collection = doc?._id;
+        res.data.nft_collection = doc?._id;
       },
       { collection: { slug: res.data.collection.slug } },
     );
+    delete res.data.collection;
     console.log('name' + res.data.name);
     //console.log(res.data);
     // Create NFT
@@ -152,27 +153,21 @@ export class NftService {
     return (await createdItem.save()) as any;
   }
 
-  async findAll(): Promise<NftType[]> {
+  async findAll(): Promise<Nft[]> {
     return await this.nftModel.find().exec();
   }
 
-  async findPerson(id: Number, field: string): Promise<PersonType> {
+  async findAllCollections(): Promise<Collection[]> {
+    return await this.collectionModel.find().exec();
+  }
+
+  async findNfts(collectionId: string): Promise<Nft[]> {
+    return await this.nftModel.find({ nft_collection: collectionId });
+  }
+
+  async findPerson(id: number, field: string): Promise<Person> {
     return await this.personModel.findById(
-      (
-        await this.nftModel.findOne({ id: id })
-      )[field],
+      (await this.nftModel.findOne({ id: id }))[field],
     );
-  }
-
-  async findOne(id: string): Promise<NftType> {
-    return await this.nftModel.findOne({ _id: id });
-  }
-
-  async delete(id: string): Promise<NftType> {
-    return await this.nftModel.findByIdAndRemove(id);
-  }
-
-  async update(id: string, item: Nft): Promise<NftType> {
-    return await this.nftModel.findByIdAndUpdate(id, item, { new: true });
   }
 }
