@@ -1,0 +1,26 @@
+.import p {
+  margin-bottom: 2px;
+}
+
+.import input {
+  margin-bottom: 10px;
+  background-color: #fff;
+  border: 1px solid #c8c4c7;
+  font-size: 12pt;
+}
+
+.import button {
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.error {
+  height: calc(100vh - 70px - 4em);
+  text-align: center;
+  padding: 2em;
+  background-color: rgb(218, 61, 61);
+}
+
+.error button {
+  margin: 0 auto;
+}
