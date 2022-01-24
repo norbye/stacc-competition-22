@@ -1,0 +1,19 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1em;
+}
+
+.item img {
+  background-color: blue;
+  width: 200px;
+  height: auto;
+}
+
+.item strong {
+  margin-top: 5px;
+}
+
+.item p {
+  margin: 0;
+}
