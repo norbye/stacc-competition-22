@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+  box-shadow: 0 0 15px -5px #000;
+}
+
+.header a:hover .logoWrapper span {
+  color: #000;
+}
+
+.header span {
+  line-height: 50px;
+  margin: 0 2em;
+  font-size: 13pt;
+}
+
+.header a {
+  display: inline-block;
+  padding: 10px 10px;
+  color: #000;
+  text-decoration: none;
+}
+
+.header a:hover {
+  color: #34349e;
+}
