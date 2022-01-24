@@ -6,14 +6,12 @@ import {
   IsOptional,
   IsObject,
 } from 'class-validator';
-import { Person } from '../interfaces/nft.interface';
-import { PersonSchema } from '../nft.schema';
 
 @ObjectType()
 class UserType {
   @Field()
   @IsString()
-  readonly username: String;
+  readonly username: string;
 }
 
 @ObjectType()
@@ -23,33 +21,54 @@ export class PersonType {
   readonly user: UserType;
   @Field()
   @IsString()
-  readonly profile_img_url: String;
+  readonly profile_img_url: string;
   @Field()
   @IsString()
-  readonly address: String;
+  readonly address: string;
   @Field()
   @IsString()
-  readonly config: String;
+  readonly config: string;
 }
 
 @ObjectType()
 export class NftType {
   @Field(() => Int)
   @IsNumber()
-  readonly id: Number;
+  readonly id: number;
   @Field()
   @IsString()
   @IsNotEmpty()
-  readonly name: String;
+  readonly name: string;
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
-  readonly description: String;
+  readonly description: string;
   @Field()
   @IsString()
-  readonly image_url: String;
+  readonly image_url: string;
   @Field(() => PersonType, { nullable: true })
   readonly owner: PersonType;
   @Field(() => PersonType, { nullable: true })
   readonly creator: PersonType;
+}
+
+@ObjectType()
+export class CollectionType {
+  @Field()
+  @IsString()
+  readonly _id: string;
+  @Field()
+  @IsString()
+  readonly name: string;
+  @Field()
+  @IsString()
+  readonly slug: string;
+  @Field()
+  @IsString()
+  readonly description: string;
+  @Field()
+  @IsString()
+  readonly image_url: string;
+  @Field(() => [NftType], { nullable: true })
+  readonly nfts: [NftType];
 }

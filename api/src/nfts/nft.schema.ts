@@ -48,7 +48,7 @@ export const NftSchema = new mongoose.Schema(
     creator: { type: mongoose.Schema.Types.ObjectId, ref: 'Person' },
     traits: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trait' }],
     last_sale: {
-      _id: mongoose.Types.ObjectId,
+      _id: mongoose.Schema.Types.ObjectId,
       asset: {
         token_id: String,
         decimals: String,
@@ -121,7 +121,7 @@ export const CollectionSchema = new mongoose.Schema(
     payout_address: String,
     require_email: Boolean,
     short_description: String,
-    slug: String,
+    slug: { type: String, unique: true },
     telegram_url: String,
     twitter_username: String,
     instagram_username: String,
@@ -137,7 +137,7 @@ export const PersonSchema = new mongoose.Schema({
     username: String,
   },
   profile_img_url: String,
-  address: String,
+  address: { type: String, unique: true },
   config: String,
 });
 
