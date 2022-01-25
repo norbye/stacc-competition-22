@@ -32,7 +32,13 @@ export class PersonType {
   readonly config: string;
 }
 
-@Injectable()
+@ObjectType()
+export class LastSaleType {
+  @Field({ nullable: true })
+  @IsString()
+  readonly total_price: string;
+}
+
 @ObjectType()
 export class NftType {
   @Field(() => Int)
@@ -55,4 +61,6 @@ export class NftType {
   readonly creator: PersonType;
   @Field(() => CollectionType, { nullable: true })
   readonly nft_collection: CollectionType;
+  @Field(() => LastSaleType, { nullable: true })
+  readonly last_sale: LastSaleType;
 }

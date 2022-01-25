@@ -22,6 +22,10 @@ type PersonType {
   config: String!
 }
 
+type LastSaleType {
+  total_price: String
+}
+
 type NftType {
   id: Int!
   name: String
@@ -30,10 +34,11 @@ type NftType {
   owner: PersonType
   creator: PersonType
   nft_collection: CollectionType
+  last_sale: LastSaleType
 }
 
 type Query {
-  items: [NftType!]!
+  items(id: Float): [NftType!]!
   hello: String!
   collections: [CollectionType!]!
 }

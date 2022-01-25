@@ -21,7 +21,7 @@ export function CollectionItem(props: ICollectionItemProps) {
       }}
     >
       <img width="400" height="400" src={props.image_url} />
-      <strong>{props.title}</strong>
+      <strong>{props.title}&nbsp;</strong>
       {props.collection ? <p>{props.collection}</p> : null}
       {props.description ? <p>{props.description}</p> : null}
       {props.creator ? <span>By {props.creator}</span> : null}

@@ -1,0 +1,16 @@
+.nft {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+}
+
+.nft > div {
+  flex-basis: 1;
+  flex-grow: 1;
+}
+
+.nft > div:first-of-type {
+  flex-basis: 200px;
+  flex-grow: 0;
+  padding-right: 10px;
+}

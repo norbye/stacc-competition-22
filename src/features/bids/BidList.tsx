@@ -6,11 +6,13 @@ import {
   clear,
   selectCollections,
 } from "../../features/collections/collectionSlice";
-import styles from "./Gallery.module.css";
+import styles from "./Bids.module.css";
+import { useParams } from "react-router-dom";
+import { formatPrice } from "../../app/utils";
 
-const ITEMS = gql`
-  {
-    items(id: null) {
+const ITEM = gql`
+  query FindItems($id: Float) {
+    items(id: $id) {
       id
       name
       creator {
@@ -27,45 +29,27 @@ const ITEMS = gql`
         total_price
       }
     }
-    collections {
-      _id
-      name
-      slug
-      description
-      image_url
-      nfts {
-        name
-        id
-      }
-    }
   }
 `;
 
-export function Gallery() {
+export function BidList() {
   const selectedCollections = useAppSelector(selectCollections);
   const dispatch = useAppDispatch();
 
-  const { loading, error, data } = useQuery(ITEMS);
+  const { assetId } = useParams();
+
+  const { loading, error, data } = useQuery(ITEM, {
+    variables: { id: parseInt(assetId ?? "0") },
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
-    <main className={styles.gallery}>
-      <h2>Collections</h2>
-      <p>Click on the collections of whose NFTs you want to display</p>
-      {selectedCollections.length !== 0 ? (
-        <button
-          onClick={() => {
-            dispatch(clear());
-          }}
-        >
-          Display all NFTs
-        </button>
-      ) : null}
-      <Collection data={data.collections} />
-      <h2>NFTs</h2>
-      <CollectionNfts data={data.items} />
-    </main>
+    <div>
+      <div>
+        <p>Bid made: 22/01/2022, bidder: Jonatan, amount: 20 WEI</p>
+      </div>
+    </div>
   );
 }

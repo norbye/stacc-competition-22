@@ -157,6 +157,10 @@ export class NftService {
     return await this.nftModel.find().exec();
   }
 
+  async findNft(nftId: number): Promise<Nft[]> {
+    return await this.nftModel.find({ id: nftId });
+  }
+
   async findAllCollections(): Promise<Collection[]> {
     return await this.collectionModel.find().exec();
   }

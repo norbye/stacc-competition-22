@@ -8,3 +8,16 @@
 .collections div {
   flex-basis: 150px;
 }
+
+.nfts a {
+  flex-basis: 200px;
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .nfts a:hover {
+    background-color: #9e9e9e;
+  }
+}
