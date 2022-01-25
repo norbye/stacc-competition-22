@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 
 export const NftSchema = new mongoose.Schema(
   {
-    id: Number,
+    id: { type: Number, unique: true },
     token_id: String,
     num_sales: Number,
     background_color: String,

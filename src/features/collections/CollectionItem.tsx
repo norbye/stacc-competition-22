@@ -8,11 +8,18 @@ interface ICollectionItemProps {
   creator?: string;
   description?: string;
   collection?: string;
+  onClick?: (itemId: string) => void;
+  selected?: boolean;
 }
 
 export function CollectionItem(props: ICollectionItemProps) {
   return (
-    <div className={styles.item}>
+    <div
+      className={`${styles.item} ${props.selected ? styles.selected : ""}`}
+      onClick={() => {
+        props.onClick ? props.onClick(props.id) : null;
+      }}
+    >
       <img width="400" height="400" src={props.image_url} />
       <strong>{props.title}</strong>
       {props.collection ? <p>{props.collection}</p> : null}

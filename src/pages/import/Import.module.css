@@ -1,3 +1,7 @@
+.import {
+  max-width: 350px;
+}
+
 .import p {
   margin-bottom: 2px;
 }

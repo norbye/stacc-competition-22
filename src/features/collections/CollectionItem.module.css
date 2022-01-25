@@ -4,6 +4,14 @@
   margin-right: 1em;
   margin-bottom: 1em;
   flex-basis: 200px;
+  padding: 10px;
+  border: 2px solid transparent;
+}
+
+.item.selected {
+  border-color: #9e9193 !important;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .item img {

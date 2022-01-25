@@ -7,9 +7,10 @@ import {
   Parent,
 } from '@nestjs/graphql';
 import { NftService } from './nft.service';
-import { CollectionType, NftType, PersonType } from './dto/import-nft.dto';
+import { NftType, PersonType } from './dto/import-nft.dto';
 import { ImportNftInput, NftInput } from './input-nft.input';
 import { Collection, Nft } from './interfaces/nft.interface';
+import { CollectionType } from './dto/collection.dto';
 
 @Resolver((of) => NftType)
 export class NftsResolver {
@@ -33,6 +34,11 @@ export class NftsResolver {
   @ResolveField(() => PersonType)
   async owner(@Parent() nft: NftType) {
     return this.nftService.findPerson(nft.id, 'owner');
+  }
+
+  @Mutation(() => NftType)
+  async importNft(@Args('input') input: ImportNftInput): Promise<NftType> {
+    return this.nftService.importNft(input);
   }
 
   @Query(() => String)

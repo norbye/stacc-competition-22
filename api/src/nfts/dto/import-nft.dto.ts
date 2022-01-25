@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import {
   IsString,
@@ -6,10 +7,11 @@ import {
   IsOptional,
   IsObject,
 } from 'class-validator';
+import { CollectionType } from './collection.dto';
 
 @ObjectType()
 class UserType {
-  @Field()
+  @Field({ nullable: true })
   @IsString()
   readonly username: string;
 }
@@ -30,14 +32,15 @@ export class PersonType {
   readonly config: string;
 }
 
+@Injectable()
 @ObjectType()
 export class NftType {
   @Field(() => Int)
   @IsNumber()
   readonly id: number;
-  @Field()
+  @Field({ nullable: true })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   readonly name: string;
   @Field({ nullable: true })
   @IsString()
@@ -50,25 +53,6 @@ export class NftType {
   readonly owner: PersonType;
   @Field(() => PersonType, { nullable: true })
   readonly creator: PersonType;
-}
-
-@ObjectType()
-export class CollectionType {
-  @Field()
-  @IsString()
-  readonly _id: string;
-  @Field()
-  @IsString()
-  readonly name: string;
-  @Field()
-  @IsString()
-  readonly slug: string;
-  @Field()
-  @IsString()
-  readonly description: string;
-  @Field()
-  @IsString()
-  readonly image_url: string;
-  @Field(() => [NftType], { nullable: true })
-  readonly nfts: [NftType];
+  @Field(() => CollectionType, { nullable: true })
+  readonly nft_collection: CollectionType;
 }

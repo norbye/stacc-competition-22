@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CollectionType, NftType, PersonType } from './dto/import-nft.dto';
+import { NftType } from './dto/import-nft.dto';
 import { Nft, Person, Trait, Collection } from './interfaces/nft.interface';
 import { ImportNftInput, NftInput } from './input-nft.input';
 
@@ -167,7 +167,9 @@ export class NftService {
 
   async findPerson(id: number, field: string): Promise<Person> {
     return await this.personModel.findById(
-      (await this.nftModel.findOne({ id: id }))[field],
+      (
+        await this.nftModel.findOne({ id: id })
+      )[field],
     );
   }
 }

@@ -1,0 +1,14 @@
+.gallery > button {
+  margin-bottom: 1.5em;
+  cursor: pointer;
+}
+
+.gallery > div:first-of-type > div {
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .gallery > div:first-of-type > div:hover {
+    border-color: #e1e1e1;
+  }
+}
