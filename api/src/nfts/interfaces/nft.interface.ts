@@ -1,5 +1,12 @@
 import { Document } from 'mongoose';
 
+export interface Bid extends Document {
+  personName: string;
+  sum: string;
+  date: Date;
+  nft: string;
+}
+
 export interface Nft extends Document {
   id: number;
   token_id: string;

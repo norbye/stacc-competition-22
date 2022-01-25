@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
-import { CollectionResolver, NftsResolver } from './nft.resolver';
+import { BidResolver, CollectionResolver, NftsResolver } from './nft.resolver';
 import {
+  BidSchema,
   CollectionSchema,
   NftSchema,
   PersonSchema,
@@ -16,8 +17,9 @@ import { NftService } from './nft.service';
       { name: 'Collection', schema: CollectionSchema },
       { name: 'Person', schema: PersonSchema },
       { name: 'Trait', schema: TraitSchema },
+      { name: 'Bid', schema: BidSchema },
     ]),
   ],
-  providers: [NftsResolver, NftService, CollectionResolver],
+  providers: [NftsResolver, NftService, CollectionResolver, BidResolver],
 })
 export class NftsModule {}
