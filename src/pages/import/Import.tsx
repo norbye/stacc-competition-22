@@ -22,8 +22,7 @@ export function Import() {
   const [importNft, { data, loading, error }] = useMutation(IMPORT_NFT);
 
   const [insertNft, setInsertNft] = useState(true);
-  let address: HTMLInputElement | null;
-  let token_id: HTMLInputElement | null;
+  const [urlValue, setUrlValue] = useState("");
 
   if (loading) return <p>Loading...</p>;
   if (error && !insertNft)
@@ -62,34 +61,46 @@ export function Import() {
     );
   }
 
+  const matchesRegex = (input: string): boolean => {
+    const split = input.split("/");
+    if (split.length < 4) return false;
+    return (
+      /^([0-9]*)$/.test(split[split.length - 1]) &&
+      /^([a-z0-9]*)$/.test(split[split.length - 2]) &&
+      split[split.length - 3] === "assets" &&
+      split[split.length - 4] === "opensea.io"
+    );
+  };
+
   return (
     <main className={styles.import}>
       <h2>Import NFT</h2>
-      <p>Address of the contract for the NFT</p>
+      <p>Insert opensea.io URL to NFT</p>
+      <p>
+        Only URLs on the form
+        &quot;https://opensea.io/assets/&#123;address&#125;/&#123;token_id&#125;&quot;
+        are accepted
+      </p>
       <input
-        ref={(node) => {
-          address = node;
-        }}
-      />
-      <p>Token ID for the NFT</p>
-      <input
-        ref={(node) => {
-          token_id = node;
+        className={matchesRegex(urlValue) ? undefined : styles.invalid}
+        onChange={(e) => {
+          setUrlValue(e.target.value);
         }}
       />
       <button
+        disabled={!matchesRegex(urlValue)}
         onClick={() => {
+          const split = urlValue.split("/");
           importNft({
             variables: {
               input: {
-                asset_contract_address: address?.value,
-                token_id: token_id?.value,
+                asset_contract_address: split[split.length - 2],
+                token_id: split[split.length - 1],
               },
             },
           });
           setInsertNft(false);
-          address = null;
-          token_id = null;
+          setUrlValue("");
         }}
       >
         Import

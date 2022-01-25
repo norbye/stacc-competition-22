@@ -25,3 +25,9 @@
 .header a:hover {
   color: #34349e;
 }
+
+@media screen and (max-width: 550px) {
+  .header span {
+    margin: 0 5px;
+  }
+}

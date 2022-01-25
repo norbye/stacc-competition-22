@@ -4,6 +4,17 @@
   margin: 10px;
 }
 
+@media screen and (max-width: 850px) {
+  .nft {
+    flex-wrap: wrap;
+  }
+}
+
+.nft img {
+  max-width: 300px;
+  height: auto;
+}
+
 .nft > div {
   flex-basis: 1;
   flex-grow: 1;

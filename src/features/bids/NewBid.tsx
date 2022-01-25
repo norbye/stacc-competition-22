@@ -18,13 +18,13 @@ const MAKE_BID = gql`
 `;
 
 export function NewBid(props: INewBidProps) {
-  const [importNft, { data, loading, error }] = useMutation(MAKE_BID);
+  const [importNft, { data, error }] = useMutation(MAKE_BID);
 
   const [makeBid, setMakeBid] = useState(true);
+  const [errorString, setErrorString] = useState("");
   let personName: HTMLInputElement | null;
   let bidSum: HTMLInputElement | null;
 
-  if (loading && !makeBid) return <p>Loading...</p>;
   if (error && !makeBid)
     return (
       <div className={styles.error}>
@@ -75,8 +75,20 @@ export function NewBid(props: INewBidProps) {
           }}
         />
       </div>
+      {errorString !== "" ? (
+        <div className={styles.error}>{errorString}</div>
+      ) : null}
       <button
         onClick={() => {
+          if (isNaN(parseFloat(bidSum?.value ?? ""))) {
+            setErrorString("Bid amount has to be a number");
+            return;
+          }
+          if ((personName?.value ?? "").trim() === "") {
+            setErrorString("Name cannot be empty");
+            return;
+          }
+          setErrorString("");
           importNft({
             variables: {
               input: {

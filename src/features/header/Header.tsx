@@ -10,7 +10,7 @@ export function Header() {
         </div>
       </Link>
       <span>
-        <Link to={"/"}>Gallery</Link>
+        <Link to={"/gallery"}>Gallery</Link>
       </span>
       <span>
         <Link to={"/import"}>Import NFT</Link>

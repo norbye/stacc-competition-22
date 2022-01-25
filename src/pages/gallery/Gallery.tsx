@@ -45,7 +45,7 @@ export function Gallery() {
   const selectedCollections = useAppSelector(selectCollections);
   const dispatch = useAppDispatch();
 
-  const { loading, error, data } = useQuery(ITEMS);
+  const { loading, error, data } = useQuery(ITEMS, { fetchPolicy: "no-cache" });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
