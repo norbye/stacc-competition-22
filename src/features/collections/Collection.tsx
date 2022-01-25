@@ -1,28 +1,30 @@
-import { Link } from "react-router-dom";
 import styles from "./Collection.module.css";
 import { CollectionItem } from "./CollectionItem";
 
 interface ICollectionProps {
   data?: {
-    id: string;
-    image_url: string;
+    _id: string;
     name: string;
-    creator: {
-      user: {
-        username: string;
-      };
-    };
-    description?: string;
-    collection?: string;
+    slug: string;
+    description: string;
+    image_url: string;
+    nfts: {
+      name: string;
+      id: number;
+    }[];
   }[];
-  direction: "VERTICAL" | "HORIZONTAL";
 }
 
 export function Collection(props: ICollectionProps) {
   return (
     <div className={styles.collections}>
       {props.data?.map((collection) => (
-        <CollectionItem {...collection} key={collection.id} />
+        <CollectionItem
+          id={collection._id}
+          image_url={collection.image_url}
+          title={collection.name}
+          key={collection._id}
+        />
       ))}
     </div>
   );

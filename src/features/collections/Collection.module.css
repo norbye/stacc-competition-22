@@ -1,4 +1,10 @@
-.collections {
+.collections,
+.nfts {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.collections div {
+  flex-basis: 150px;
 }
