@@ -2,8 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CollectionType {
+  _id: String!
+  name: String!
+  slug: String!
+  description: String!
+  image_url: String!
+  nfts: [NftType!]
+}
+
 type UserType {
-  username: String!
+  username: String
 }
 
 type PersonType {
@@ -15,24 +24,25 @@ type PersonType {
 
 type NftType {
   id: Int!
-  name: String!
+  name: String
   description: String
   image_url: String!
   owner: PersonType
   creator: PersonType
-}
-
-type CollectionType {
-  _id: String!
-  name: String!
-  slug: String!
-  description: String!
-  image_url: String!
-  nfts: [NftType!]
+  nft_collection: CollectionType
 }
 
 type Query {
   items: [NftType!]!
   hello: String!
   collections: [CollectionType!]!
+}
+
+type Mutation {
+  importNft(input: ImportNftInput!): NftType!
+}
+
+input ImportNftInput {
+  asset_contract_address: String!
+  token_id: String!
 }

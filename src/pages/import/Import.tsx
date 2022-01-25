@@ -45,7 +45,12 @@ export function Import() {
     return (
       <main className={styles.import}>
         <h2>NFT Imported successfully</h2>
-        <CollectionItem {...data.importNft} />
+        <CollectionItem
+          id={data.importNft.id}
+          title={data.importNft.name}
+          image_url={data.importNft.image_url}
+          creator={data.importNft.creator.user.username}
+        />
         <button
           onClick={() => {
             setInsertNft(true);
