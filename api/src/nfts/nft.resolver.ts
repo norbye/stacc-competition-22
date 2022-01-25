@@ -7,9 +7,9 @@ import {
   Parent,
 } from '@nestjs/graphql';
 import { NftService } from './nft.service';
-import { NftType, PersonType } from './dto/import-nft.dto';
-import { ImportNftInput, NftInput } from './input-nft.input';
-import { Collection, Nft } from './interfaces/nft.interface';
+import { BidType, NftType, PersonType } from './dto/import-nft.dto';
+import { BidInput, ImportNftInput, NftInput } from './input-nft.input';
+import { Bid, Collection, Nft } from './interfaces/nft.interface';
 import { CollectionType } from './dto/collection.dto';
 
 @Resolver((of) => NftType)
@@ -39,14 +39,14 @@ export class NftsResolver {
     return this.nftService.findPerson(nft.id, 'owner');
   }
 
+  @ResolveField(() => [BidType])
+  async bids(@Parent() nft: Nft) {
+    return this.nftService.findBids(nft._id);
+  }
+
   @Mutation(() => NftType)
   async importNft(@Args('input') input: ImportNftInput): Promise<NftType> {
     return this.nftService.importNft(input);
-  }
-
-  @Query(() => String)
-  async hello() {
-    return 'hello';
   }
 }
 
@@ -62,5 +62,15 @@ export class CollectionResolver {
   @ResolveField(() => NftType)
   async nfts(@Parent() nft_collection: CollectionType) {
     return this.nftService.findNfts(nft_collection._id);
+  }
+}
+
+@Resolver((of) => BidType)
+export class BidResolver {
+  constructor(private readonly nftService: NftService) {}
+
+  @Mutation(() => BidType)
+  async makeBid(@Args('input') input: BidInput): Promise<BidType> {
+    return this.nftService.createBid(input);
   }
 }

@@ -2,9 +2,15 @@ import axios from 'axios';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { NftType } from './dto/import-nft.dto';
-import { Nft, Person, Trait, Collection } from './interfaces/nft.interface';
-import { ImportNftInput, NftInput } from './input-nft.input';
+import { BidType, NftType } from './dto/import-nft.dto';
+import {
+  Nft,
+  Person,
+  Trait,
+  Collection,
+  Bid,
+} from './interfaces/nft.interface';
+import { BidInput, ImportNftInput, NftInput } from './input-nft.input';
 
 @Injectable()
 export class NftService {
@@ -13,6 +19,7 @@ export class NftService {
     @InjectModel('Trait') private traitModel: Model<Trait>,
     @InjectModel('Person') private personModel: Model<Person>,
     @InjectModel('Collection') private collectionModel: Model<Collection>,
+    @InjectModel('Bid') private bidModel: Model<Bid>,
   ) {}
 
   async importNft(importNftDto: ImportNftInput): Promise<NftType> {
@@ -167,6 +174,17 @@ export class NftService {
 
   async findNfts(collectionId: string): Promise<Nft[]> {
     return await this.nftModel.find({ nft_collection: collectionId });
+  }
+
+  async createBid(bidInput: BidInput): Promise<BidType> {
+    const createdItem = new this.bidModel(bidInput);
+    createdItem.date = new Date();
+    return (await createdItem.save()) as any;
+  }
+
+  async findBids(nftId: string): Promise<Bid[]> {
+    console.log(nftId);
+    return await this.bidModel.find({ nft: nftId });
   }
 
   async findPerson(id: number, field: string): Promise<Person> {

@@ -149,3 +149,10 @@ export const TraitSchema = new mongoose.Schema({
   trait_count: Number,
   order: String,
 });
+
+export const BidSchema = new mongoose.Schema({
+  personName: String,
+  sum: Number,
+  date: Date,
+  nft: String,
+});

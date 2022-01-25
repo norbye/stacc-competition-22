@@ -9,6 +9,7 @@ import {
 import styles from "./Nft.module.css";
 import { useParams } from "react-router-dom";
 import { formatPrice } from "../../app/utils";
+import { Bids } from "../../features/bids/Bids";
 
 const ITEM = gql`
   query FindItems($id: Float) {
@@ -61,22 +62,7 @@ export function Nft() {
           <span>By {data.items[0].creator.user.username}</span>
         ) : null}
       </div>
-      <div>
-        <h2>Fake bids</h2>
-        <div>
-          <div>
-            <p>Bid made: 22/01/2022, bidder: Jonatan, amount: 20 WEI</p>
-          </div>
-        </div>
-        <div>
-          <h3>Make new bid</h3>
-          <label htmlFor="name">Your name</label>
-          <input type="text" id="name" />
-          <label htmlFor="amount">Bid amount (WEI)</label>
-          <input type="number" id="amount" />
-        </div>
-        <button>New bid</button>
-      </div>
+      <Bids />
     </main>
   );
 }

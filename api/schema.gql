@@ -26,7 +26,19 @@ type LastSaleType {
   total_price: String
 }
 
+type BidType {
+  personName: String!
+  sum: String
+  date: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type NftType {
+  _id: String!
   id: Int!
   name: String
   description: String
@@ -35,19 +47,26 @@ type NftType {
   creator: PersonType
   nft_collection: CollectionType
   last_sale: LastSaleType
+  bids: [BidType!]
 }
 
 type Query {
   items(id: Float): [NftType!]!
-  hello: String!
   collections: [CollectionType!]!
 }
 
 type Mutation {
   importNft(input: ImportNftInput!): NftType!
+  makeBid(input: BidInput!): BidType!
 }
 
 input ImportNftInput {
   asset_contract_address: String!
   token_id: String!
+}
+
+input BidInput {
+  personName: String!
+  sum: String!
+  nft: String!
 }

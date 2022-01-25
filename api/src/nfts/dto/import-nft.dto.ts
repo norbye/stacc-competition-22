@@ -6,6 +6,7 @@ import {
   IsNumber,
   IsOptional,
   IsObject,
+  IsDate,
 } from 'class-validator';
 import { CollectionType } from './collection.dto';
 
@@ -40,7 +41,24 @@ export class LastSaleType {
 }
 
 @ObjectType()
+export class BidType {
+  @Field()
+  @IsString()
+  readonly personName: string;
+  @Field({ nullable: true })
+  @IsString()
+  @IsOptional()
+  readonly sum: string;
+  @Field()
+  @IsDate()
+  readonly date: Date;
+}
+
+@ObjectType()
 export class NftType {
+  @Field()
+  @IsString()
+  readonly _id: string;
   @Field(() => Int)
   @IsNumber()
   readonly id: number;
@@ -63,4 +81,6 @@ export class NftType {
   readonly nft_collection: CollectionType;
   @Field(() => LastSaleType, { nullable: true })
   readonly last_sale: LastSaleType;
+  @Field(() => [BidType], { nullable: true })
+  readonly bids: [BidType];
 }
