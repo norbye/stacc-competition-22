@@ -2,11 +2,13 @@
   display: flex;
   flex-direction: column;
   margin-right: 1em;
+  margin-bottom: 1em;
+  flex-basis: 200px;
 }
 
 .item img {
   background-color: blue;
-  width: 200px;
+  width: 100%;
   height: auto;
 }
 

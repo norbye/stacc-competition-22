@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { Collection } from "../../features/collections/Collection";
+import { CollectionNfts } from "../../features/collections/CollectionNfts";
 
 const ITEMS = gql`
   {
@@ -14,6 +15,17 @@ const ITEMS = gql`
       description
       image_url
     }
+    collections {
+      _id
+      name
+      slug
+      description
+      image_url
+      nfts {
+        name
+        id
+      }
+    }
   }
 `;
 
@@ -26,9 +38,9 @@ export function Gallery() {
   return (
     <main>
       <h2>Collections</h2>
-      <Collection direction={"HORIZONTAL"} />
+      <Collection data={data.collections} />
       <h2>NFTs</h2>
-      <Collection direction={"VERTICAL"} data={data.items} />
+      <CollectionNfts data={data.items} />
     </main>
   );
 }
