@@ -17,8 +17,11 @@ export class NftsResolver {
   constructor(private readonly nftService: NftService) {}
 
   @Query(() => [NftType])
-  async items(): Promise<Nft[]> {
-    return this.nftService.findAll();
+  async items(@Args('id', { nullable: true }) id?: number): Promise<Nft[]> {
+    if (id === null) {
+      return this.nftService.findAll();
+    }
+    return this.nftService.findNft(id);
   }
 
   /*@Query(() => PersonType)

@@ -2,6 +2,8 @@ import styles from "./Collection.module.css";
 import { CollectionItem } from "./CollectionItem";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { toggle, selectCollections } from "./collectionSlice";
+import { formatPrice } from "../../app/utils";
+import { Link } from "react-router-dom";
 
 interface ICollectionNftsProps {
   data?: {
@@ -18,6 +20,9 @@ interface ICollectionNftsProps {
     nft_collection?: {
       _id: string;
     };
+    last_sale?: {
+      total_price: string;
+    };
   }[];
 }
 
@@ -33,13 +38,17 @@ export function CollectionNfts(props: ICollectionNftsProps) {
             props.data?.indexOf(nft) === pos
         )
         .map((nft) => (
-          <CollectionItem
-            id={nft.id}
-            title={nft.name}
-            image_url={nft.image_url}
-            creator={nft.creator.user.username}
-            key={nft.id}
-          />
+          <Link to={"/asset/" + nft.id} key={nft.id}>
+            <CollectionItem
+              id={nft.id}
+              title={nft.name}
+              description={
+                "Last sold for: " + formatPrice(nft.last_sale?.total_price)
+              }
+              image_url={nft.image_url}
+              creator={nft.creator.user.username}
+            />
+          </Link>
         ))}
     </div>
   );

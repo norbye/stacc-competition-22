@@ -15,9 +15,6 @@ export function Header() {
       <span>
         <Link to={"/import"}>Import NFT</Link>
       </span>
-      <span>
-        <Link to={"/create"}>Create NFT</Link>
-      </span>
     </header>
   );
 }
