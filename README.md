@@ -12,7 +12,6 @@ With the aims of learning new technologies and enhancing knowledge in others, an
 ## Preview product
 
 Repository: [github/norbye/stacc-competition-22](https://github.com/norbye/stacc-competition-22)  
-Production environment: [stacc-22.norbye.com](https://stacc-22.norbye.com)
 
 ## Technologies
 
